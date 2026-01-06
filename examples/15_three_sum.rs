@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/3sum
+
 use std::collections::{BTreeMap, HashSet};
 
 fn three_sum(nums: &[i32]) -> Vec<Vec<i32>> {
