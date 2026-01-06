@@ -7,7 +7,9 @@ fn longest_palindrome(s: &str) -> &str {
         return s;
     }
 
-    let mut is_palindrome = HashSet::<Range<usize>>::new();
+    let mut is_palindrome = HashSet::<Range<usize>>::with_capacity(s.len().pow(2) / 2);
+
+    let mut best = 0..1;
 
     // s consist of only digits and English letters
     let s = s.as_bytes();
@@ -20,16 +22,15 @@ fn longest_palindrome(s: &str) -> &str {
             if (prev.len() <= 1 || is_palindrome.contains(&prev))
                 && s[curr.start] == s[curr.end - 1]
             {
-                is_palindrome.insert(curr.clone());
+                if curr.len() > best.len() {
+                    best = curr.clone();
+                }
+                is_palindrome.insert(curr);
             }
         }
     }
 
-    is_palindrome
-        .iter()
-        .max_by_key(|x| x.len())
-        .map(|x| unsafe { std::str::from_utf8_unchecked(&s[x.start..x.end]) })
-        .unwrap_or_default()
+    unsafe { std::str::from_utf8_unchecked(&s[best.start..best.end]) }
 }
 
 fn main() {
