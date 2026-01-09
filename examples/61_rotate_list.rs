@@ -1,32 +1,6 @@
 // https://leetcode.com/problems/rotate-list/
 
-#[derive(PartialEq, Eq, Clone, Debug)]
-pub struct ListNode {
-    pub val: i32,
-    pub next: Option<Box<ListNode>>,
-}
-
-// impl ListNode {
-//     #[inline]
-//     fn new(val: i32) -> Self {
-//         ListNode { next: None, val }
-//     }
-// }
-
-macro_rules! make_list {
-    [$first:expr, $($rest:expr),+ $(,)?] => {
-        ListNode {
-            next: Some(Box::new(make_list![$($rest),+])),
-            val: $first,
-        }
-    };
-    [$val:expr] => {
-        ListNode {
-            next: None,
-            val: $val,
-        }
-    };
-}
+use leetcode::{ListNode, make_list};
 
 fn rotate_right(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
     let mut head = head?;
