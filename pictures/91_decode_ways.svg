@@ -1,0 +1,118 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 566.5026026866594 432.52985110520353"
+    width="1133.0052053733189" height="865.0597022104071">
+    <!-- svg-source:excalidraw -->
+    <metadata></metadata>
+    <defs>
+    </defs>
+    <rect x="0" y="0" width="566.5026026866594" height="432.52985110520353" fill="#ffffff"></rect>
+    <g transform="translate(10 10) rotate(0 63.487945556640625 10)"><text x="0" y="15.264000000000001"
+            font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e" text-anchor="start"
+            style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">91. Decode Ways</text></g>
+    <g transform="translate(34.69655139956603 80.43222507562359) rotate(0 23.999977111816406 10)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">11106</text>
+    </g>
+    <g transform="translate(142.09287780048498 68.81030606690592) rotate(0 34.807960510253906 20)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr"
+            dominant-baseline="alphabetic">(1,1,10,6)</text><text x="0" y="35.264"
+            font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e" text-anchor="start"
+            style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">(11,10,6)</text></g>
+    <g transform="translate(30.60241603137456 169.9103774905484) rotate(0 28.16796875 20)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">F[0] =
+            1</text><text x="0" y="35.264" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px"
+            fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+            dominant-baseline="alphabetic">F[1] = </text></g>
+    <g transform="translate(28.744463056259065 133.1824849707143) rotate(0 28.799972534179688 10)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">111106</text>
+    </g>
+    <g transform="translate(201.43646067312966 121.58562547661154) rotate(0 41.471954345703125 40)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr"
+            dominant-baseline="alphabetic">(1,1,1,10,6)</text><text x="0" y="35.264"
+            font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e" text-anchor="start"
+            style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">(11,1,10,6)</text><text x="0"
+            y="55.264" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr"
+            dominant-baseline="alphabetic">(1,11,10,6)</text><text x="0" y="75.264"
+            font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e" text-anchor="start"
+            style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic"></text></g>
+    <g transform="translate(157.71843416201773 199.582559067303) rotate(0 57.43992614746094 10)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">11 -&gt; (1,1),
+            (11)</text></g>
+    <g transform="translate(30.778114472410834 246.98122099775333) rotate(0 30.887969970703125 20)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">11
+            1106</text><text x="0" y="35.264" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px"
+            fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+            dominant-baseline="alphabetic">12</text></g>
+    <g transform="translate(114.28820079955085 246.91070354308567) rotate(0 30.887969970703125 20)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">111
+            106</text><text x="0" y="35.264" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px"
+            fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+            dominant-baseline="alphabetic">123</text></g>
+    <g transform="translate(198.49838394717335 248.78742454557323) rotate(0 30.887969970703125 20)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">1111
+            06</text><text x="0" y="35.264" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px"
+            fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+            dominant-baseline="alphabetic">1233</text></g>
+    <g transform="translate(284.76291500169646 244.92184132199804) rotate(0 69.8159408569336 10)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#e03131"
+            text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">check that next
+            is 0</text></g>
+    <g transform="translate(289.71891128040943 271.9752810838779) rotate(0 133.391845703125 10)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#e03131"
+            text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">if next is not
+            zero: f[n] = f[n-2]+f[n-1]</text></g>
+    <g transform="translate(22.676927662626895 313.1992986217251) rotate(0 30.887969970703125 20)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">1112
+            76</text><text x="0" y="35.264" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px"
+            fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+            dominant-baseline="alphabetic">1235</text></g>
+    <g transform="translate(109.93069244730896 314.47784758023613) rotate(0 30.887969970703125 20)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">11127
+            6</text><text x="0" y="35.264" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px"
+            fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+            dominant-baseline="alphabetic">12355</text></g>
+    <g transform="translate(196.2195415260826 313.7088836157882) rotate(0 28.799972534179688 20)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr"
+            dominant-baseline="alphabetic">111276</text><text x="0" y="35.264"
+            font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e" text-anchor="start"
+            style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">123555</text></g>
+    <g transform="translate(339.49059654888697 312.690535254211) rotate(0 99.263916015625 10)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#e03131"
+            text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">we try to
+            attach to previous</text></g>
+    <g transform="translate(23.590306850033812 382.52985110520353) rotate(0 28.17597198486328 20)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">11 10
+            6</text><text x="0" y="35.264" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px"
+            fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+            dominant-baseline="alphabetic">12 3</text></g>
+    <g transform="translate(107.42593848124716 378.2538900663292) rotate(0 23.999977111816406 20)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr"
+            dominant-baseline="alphabetic">11106</text><text x="0" y="35.264"
+            font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e" text-anchor="start"
+            style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">12 33</text></g>
+    <g transform="translate(209.9823751759136 373.7594648362219) rotate(0 19.199981689453125 20)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr"
+            dominant-baseline="alphabetic">1011</text><text x="0" y="35.264"
+            font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e" text-anchor="start"
+            style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic"> 11</text></g>
+    <g transform="translate(278.70197156990207 363.8618643347604) rotate(0 28.143966674804688 20)"><text x="0"
+            y="15.264000000000001" font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e"
+            text-anchor="start" style="white-space: pre;" direction="ltr"
+            dominant-baseline="alphabetic">(10,1,1)</text><text x="0" y="35.264"
+            font-family="Nunito, sans-serif, Segoe UI Emoji" font-size="16px" fill="#1e1e1e" text-anchor="start"
+            style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">(10,11)</text></g>
+</svg>
