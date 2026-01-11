@@ -3,20 +3,20 @@
 
 #![allow(clippy::needless_bool, clippy::useless_vec)]
 
-use std::{fmt, rc::Rc};
+use std::{cell::RefCell, fmt, rc::Rc};
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 struct Tree<T> {
     val: T,
+    left: Option<Rc<RefCell<Self>>>,
+    right: Option<Rc<RefCell<Self>>>,
+}
+
+#[derive(PartialEq, Eq, PartialOrd, Ord)]
+struct TreeCompare {
     left: Option<Box<Self>>,
     right: Option<Box<Self>>,
 }
-
-// #[derive(PartialEq, Eq, PartialOrd, Ord)]
-// struct TreeCompare {
-//     left: Option<Box<Self>>,
-//     right: Option<Box<Self>>,
-// }
 
 impl<T> fmt::Display for Tree<T>
 where
@@ -24,84 +24,136 @@ where
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match (&self.left, &self.right) {
-            (Some(left), Some(right)) => write!(f, "({left} {} {right})", &self.val),
-            (Some(left), None) => write!(f, "({left} {})", &self.val),
-            (None, Some(right)) => write!(f, "({} {right})", &self.val),
+            (Some(left), Some(right)) => {
+                write!(f, "({} {} {})", left.borrow(), right.borrow(), &self.val)
+            }
+            (Some(left), None) => write!(f, "({} {})", left.borrow(), &self.val),
+            (None, Some(right)) => write!(f, "({} {})", &self.val, right.borrow()),
             (None, None) => write!(f, "({})", &self.val),
         }
     }
 }
 
 impl<T> Tree<T> {
-    // fn compare(&self) -> TreeCompare {
-    //     TreeCompare {
-    //         left: self.left.as_ref().map(|x| Box::new(x.compare())),
-    //         right: self.right.as_ref().map(|x| Box::new(x.compare())),
-    //     }
+    fn compare(&self) -> TreeCompare {
+        TreeCompare {
+            left: self.left.as_ref().map(|x| Box::new(x.borrow().compare())),
+            right: self.right.as_ref().map(|x| Box::new(x.borrow().compare())),
+        }
+    }
+
+    fn clone_deep(&self) -> Self
+    where
+        T: Clone,
+    {
+        let f = |x: &Option<Rc<RefCell<Tree<T>>>>| {
+            x.as_ref()
+                .map(|x| Rc::new(RefCell::new(x.borrow().clone_deep())))
+        };
+        Self {
+            val: self.val.clone(),
+            left: f(&self.left),
+            right: f(&self.right),
+        }
+    }
+}
+
+fn tree_insert<T>(tree: Rc<RefCell<Tree<T>>>, cursor: &TreeCursor, val: T)
+where
+    T: Clone,
+{
+    let subtree = tree_get(tree, cursor);
+    let mut subtree_mut = subtree.borrow_mut();
+    subtree_mut.right = Some(Rc::new(RefCell::new(Tree {
+        val,
+        left: subtree_mut.right.take(),
+        right: None,
+    })));
+
+    // let tree2 = Rc::new(RefCell::new(Tree {
+    //     val: tree.borrow().val.clone(),
+    //     left: None,
+    //     right: None,
+    // }));
+
+    // let mut curr = tree;
+    // let mut curr2 = tree2;
+
+    // for dir in &cursor.dirs {
+    //     match dir {
+    //         Dir::Left => {
+    //             let curr_left = curr.borrow().left.clone().unwrap();
+    //             curr = curr_left;
+
+    //             let curr_ref = curr.borrow();
+    //             let mut curr2_ref = curr2.borrow_mut();
+
+    //             let left2 = Rc::new(RefCell::new(Tree {
+    //                 val: curr_ref.val.clone(),
+    //                 left: None,
+    //                 right: None,
+    //             }));
+    //             curr2_ref.left = Some(left2.clone());
+    //             curr2_ref.right = curr_ref.right.clone();
+
+    //             drop(curr2_ref);
+
+    //             curr2 = left2;
+    //         }
+    //         Dir::Right => {
+    //             todo!()
+    //         }
+    //     };
     // }
+}
 
-    fn empty(self) -> Tree<()> {
-        Tree {
-            val: (),
-            left: self.left.map(|x| Box::new(x.empty())),
-            right: self.right.map(|x| Box::new(x.empty())),
+fn tree_get<T>(tree: Rc<RefCell<Tree<T>>>, cursor: &TreeCursor) -> Rc<RefCell<Tree<T>>> {
+    let mut curr = tree;
+    for dir in &cursor.dirs {
+        curr = match dir {
+            Dir::Left => curr.borrow().left.clone().unwrap(),
+            Dir::Right => curr.borrow().right.clone().unwrap(),
+        };
+    }
+    curr
+}
+
+fn tree_next<T>(tree: Rc<RefCell<Tree<T>>>, cursor: &mut TreeCursor) {
+    let mut ptrs = vec![tree];
+
+    for dir in &cursor.dirs {
+        let curr = ptrs.last().unwrap().borrow();
+        let next = match dir {
+            Dir::Left => curr.left.as_ref().unwrap(),
+            Dir::Right => curr.right.as_ref().unwrap(),
         }
+        .clone();
+        drop(curr);
+        ptrs.push(next);
     }
 
-    fn insert(&mut self, cursor: &TreeCursor, val: T) {
-        let subtree = self.get_mut(cursor);
-        subtree.right = Some(Box::new(Tree {
-            val,
-            left: subtree.right.take(),
-            right: None,
-        }));
-    }
+    let curr = ptrs.last().unwrap().borrow();
 
-    fn get_mut(&mut self, cursor: &TreeCursor) -> &mut Self {
-        let mut curr = self;
-        for dir in &cursor.dirs {
-            curr = match dir {
-                Dir::Left => curr.left.as_mut().unwrap(),
-                Dir::Right => curr.right.as_mut().unwrap(),
-            };
+    if curr.left.is_some() {
+        cursor.dirs.push(Dir::Left);
+    } else if curr.right.is_some() {
+        cursor.dirs.push(Dir::Right);
+    } else {
+        // try to find the next right node and set it as right
+        while !cursor.dirs.is_empty() {
+            let curr = &ptrs[cursor.dirs.len() - 1].borrow();
+            if cursor
+                .dirs
+                .pop_if(|dir| !(*dir == Dir::Left && curr.right.is_some()))
+                .is_none()
+            {
+                break;
+            }
         }
-        curr
-    }
-
-    fn next(&self, cursor: &mut TreeCursor) {
-        let mut ptrs = vec![self];
-
-        for dir in &cursor.dirs {
-            let curr = ptrs.last().unwrap();
-            ptrs.push(match dir {
-                Dir::Left => curr.left.as_ref().unwrap(),
-                Dir::Right => curr.right.as_ref().unwrap(),
-            });
-        }
-
-        let curr = ptrs.last().unwrap();
-
-        if curr.left.is_some() {
-            cursor.dirs.push(Dir::Left);
-        } else if curr.right.is_some() {
-            cursor.dirs.push(Dir::Right);
+        if let Some(last) = cursor.dirs.last_mut() {
+            *last = Dir::Right;
         } else {
-            // try to find the next right node and set it as right
-            while !cursor.dirs.is_empty() {
-                let curr = ptrs[cursor.dirs.len() - 1];
-                if cursor
-                    .dirs
-                    .pop_if(|dir| !(*dir == Dir::Left && curr.right.is_some()))
-                    .is_none()
-                {
-                    break;
-                }
-            }
-            if let Some(last) = cursor.dirs.last_mut() {
-                *last = Dir::Right;
-            } else {
-                cursor.exhausted = true;
-            }
+            cursor.exhausted = true;
         }
     }
 }
@@ -124,46 +176,46 @@ enum Dir {
     Right,
 }
 
-fn f(n: usize) -> usize {
-    let mut prev = vec![Tree {
+fn f(n: usize) -> Vec<Rc<RefCell<Tree<usize>>>> {
+    let mut prev = vec![Rc::new(RefCell::new(Tree {
         val: 1,
         left: None,
         right: None,
-    }];
+    }))];
     for x in 2..=n {
-        let mut curr: Vec<Tree<_>> = vec![];
+        let mut curr: Vec<Rc<RefCell<Tree<_>>>> = vec![];
         prev.iter().for_each(|tree| {
-            curr.push(Tree {
+            curr.push(Rc::new(RefCell::new(Tree {
                 val: x,
-                left: Some(Box::new(tree.clone())),
+                left: Some(tree.clone()),
                 right: None,
-            });
+            })));
             let mut cursor = TreeCursor::new();
             while !cursor.exhausted {
-                let mut tree2 = tree.clone();
-                tree2.insert(&cursor, x);
+                let tree2 = Rc::new(RefCell::new(tree.borrow().clone_deep()));
+                tree_insert(tree2.clone(), &cursor, x);
                 curr.push(tree2);
-                tree.next(&mut cursor);
+                tree_next(tree.clone(), &mut cursor);
             }
         });
-        dbg!(&curr);
+        // dbg!(&curr);
         // for x in &curr {
         //     println!("{x}");
         // }
         // println!("---");
-        curr.sort_unstable_by_key(|x| x.clone().empty());
-        curr.dedup_by_key(|x| x.clone().empty());
+        curr.sort_unstable_by_key(|x| x.borrow().compare());
+        curr.dedup_by_key(|x| x.borrow().compare());
         prev = curr;
     }
-    prev.len()
+    prev
 }
 
-fn num_trees(n: i32) -> i32 {
-    f(n as usize) as i32
-}
+// fn num_trees(n: i32) -> i32 {
+//     f(n as usize) as i32
+// }
 
 fn main() {
-    dbg!(f(4));
+    dbg!(f(2));
     // let tree = Tree {
     //     val: 2,
     //     left: Some(Box::new(Tree {
