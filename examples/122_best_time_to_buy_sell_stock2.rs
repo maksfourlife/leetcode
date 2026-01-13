@@ -1,5 +1,8 @@
 // https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii
 
+// WITH HELP
+// that we only need to check for growing consecutive prices
+
 fn max_profit(prices: &[i32]) -> i32 {
     let mut s = 0;
     for i in 1..prices.len() {
