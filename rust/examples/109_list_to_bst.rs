@@ -4,7 +4,7 @@
 
 use std::{cell::RefCell, rc::Rc};
 
-use leetcode::{ListNode, make_list};
+use leetcode_rust::{ListNode, make_list};
 
 // Definition for a binary tree node.
 #[derive(Debug, PartialEq, Eq)]

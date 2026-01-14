@@ -2,7 +2,7 @@
 
 #![allow(clippy::boxed_local)]
 
-use leetcode::{ListNode, make_list};
+use leetcode_rust::{ListNode, make_list};
 
 fn add_two_numbers(
     mut l1: Option<Box<ListNode>>,

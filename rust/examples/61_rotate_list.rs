@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/rotate-list/
 
-use leetcode::{ListNode, make_list};
+use leetcode_rust::{ListNode, make_list};
 
 fn rotate_right(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
     let mut head = head?;
